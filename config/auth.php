@@ -43,7 +43,7 @@ return [
 
         // Añade el guardia 'api' para autenticación basada en tokens
         'api' => [
-            'driver' => 'passport', // Usa 'passport' como driver
+            'driver' => 'sanctum',
             'provider' => 'users',
         ],
     ],

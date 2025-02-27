@@ -9,67 +9,96 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the tasks.
+     * Muestra la lista de tareas del usuario autenticado.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        // Obtener las tareas del usuario autenticado
-        $user = Auth::user();
-        return $user->tasks;
+        // Obtener las tareas asociadas al usuario autenticado
+        $tasks = Auth::user()->tasks;
+        return response()->json($tasks, 200);
     }
 
     /**
-     * Store a newly created task in storage.
+     * Almacena una nueva tarea en la base de datos.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
+        // Validación de los datos de entrada
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:pending,in_progress,completed',
         ]);
 
-        // Crear la tarea y asociarla al usuario autenticado
-        $user = Auth::user();
-        $task = $user->tasks()->create($request->all());
+        // Crear la tarea asociándola al usuario autenticado
+        $task = Auth::user()->tasks()->create($request->all());
 
         return response()->json($task, 201);
     }
 
     /**
-     * Update the specified task in storage.
+     * Muestra una tarea específica.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Task $task)
+    public function show($id)
     {
-        $request->validate([
-            'title' => 'sometimes|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'sometimes|in:pending,in_progress,completed',
-        ]);
-    
-        // Asegurarse de que el usuario autenticado sea el dueño de la tarea
-        $user = Auth::user();
-        if ($task->user_id === $user->id) {
-            $task->update($request->all());
-            return response()->json($task, 200);
-        }
-    
-        return response()->json(['error' => 'Unauthorized'], 403);
-    }
-    
-    /**
-     * Remove the specified task from storage.
-     */
-    public function destroy(Task $task)
-    {
-        // Asegurarse de que el usuario autenticado sea el dueño de la tarea
-        $user = Auth::user();
-        if ($task->user_id === $user->id) {
-            $task->delete();
-            return response()->json(null, 204);
-        }
-    
-        return response()->json(['error' => 'Unauthorized'], 403);
+        $task = Task::where('id', $id)
+                   ->where('user_id', Auth::id())
+                   ->firstOrFail();
+
+        return response()->json($task, 200);
     }
 
+    /**
+     * Actualiza una tarea existente.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
+        $task = Task::where('id', $id)
+                   ->where('user_id', Auth::id())
+                   ->firstOrFail();
+
+        // Valida los datos de entrada
+        $request->validate([
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'status' => 'sometimes|in:pending,in_progress,completed',
+        ]);
+
+        // Actualiza la tarea
+        $task->update($request->all());
+
+        return response()->json($task, 200);
+    }
+
+    /**
+     * Elimina una tarea de la base de datos.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
+        $task = Task::where('id', $id)
+                   ->where('user_id', Auth::id())
+                   ->firstOrFail();
+
+        // Elimina la tarea
+        $task->delete();
+
+        return response()->json(null, 204);
+    }
 }

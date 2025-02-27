@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -13,7 +13,7 @@ class User extends Authenticatable
 
     /**
      * Modelo de usuario que representa a los usuarios en la base de datos.
-     * Utiliza Passport para la autenticación con tokens, factorías para la generación
+     * Utiliza Sanctum para la autenticación con tokens, factorías para la generación
      * de datos de prueba y notificaciones.
      */
 
@@ -39,17 +39,14 @@ class User extends Authenticatable
     ];
 
     /**
-     * Define los atributos con conversión de tipo.
+     * Atributos que deben ser convertidos a tipos nativos.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     /**
      * Relación uno a muchos: un usuario puede tener muchas tareas.

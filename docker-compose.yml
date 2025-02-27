@@ -1,0 +1,31 @@
+services:
+  app:
+    platform: linux/amd64
+    build: .
+    container_name: task_management_app
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: task_management
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    volumes:
+      - .:/var/www/html
+  db:
+    image: mysql:8.0
+    container_name: task_management_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: task_management
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

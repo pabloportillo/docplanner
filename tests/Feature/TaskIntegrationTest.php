@@ -5,77 +5,89 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum; // Asegúrate de importar Sanctum
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskIntegrationTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * Prueba la creación de una tarea a través de la API.
+     */
     public function test_create_task_via_api()
     {
-        // Autenticar un usuario
+        // Autenticar usuario usando Sanctum
         $user = User::factory()->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user); // Cambiado a Sanctum
 
-        // Datos de la tarea
+        // Datos de la tarea a crear
         $taskData = [
             'title' => 'Test Task',
             'description' => 'This is a test task',
             'status' => 'pending',
         ];
 
-        // Hacer una solicitud POST a la API
+        // Enviar petición POST a la API
         $response = $this->postJson('/api/tasks', $taskData);
 
-        // Verificar que la respuesta es correcta
+        // Verificar que la respuesta es 201 (creado) y contiene el título correcto
         $response->assertStatus(201)
                  ->assertJson(['title' => 'Test Task']);
 
-        // Verificar que la tarea se guardó en la base de datos
+        // Comprobar que la tarea se ha guardado en la base de datos
         $this->assertDatabaseHas('tasks', [
             'title' => 'Test Task',
             'user_id' => $user->id,
         ]);
     }
 
+    /**
+     * Prueba la obtención de todas las tareas del usuario autenticado.
+     */
     public function test_get_user_tasks_via_api()
     {
-        // Autenticar un usuario
+        // Autenticar usuario usando Sanctum
         $user = User::factory()->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user); // Cambiado a Sanctum
 
-        // Crear tareas asociadas al usuario
+        // Crear 3 tareas asociadas al usuario
         Task::factory()->count(3)->create(['user_id' => $user->id]);
 
-        // Hacer una solicitud GET a la API
+        // Enviar petición GET para obtener las tareas del usuario
         $response = $this->getJson('/api/tasks');
 
-        // Verificar que la respuesta es correcta
+        // Verificar que la respuesta es 200 y devuelve 3 tareas
         $response->assertStatus(200)
-                 ->assertJsonCount(3); // Verificar que se devuelven 3 tareas
+                 ->assertJsonCount(3);
     }
 
+    /**
+     * Prueba la actualización de una tarea existente mediante la API.
+     */
     public function test_update_task_via_api()
     {
-        // Autenticar un usuario
+        // Autenticar usuario usando Sanctum
         $user = User::factory()->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user); // Cambiado a Sanctum
 
-        // Crear una tarea asociada al usuario
+        // Crear una tarea de prueba asociada al usuario
         $task = Task::factory()->create(['user_id' => $user->id]);
 
-        // Datos de actualización
+        // Datos para actualizar la tarea
         $updateData = [
             'title' => 'Updated Task Title',
             'status' => 'completed',
         ];
 
-        // Hacer una solicitud PUT a la API
+        // Enviar petición PUT para actualizar la tarea
         $response = $this->putJson("/api/tasks/{$task->id}", $updateData);
 
-        // Verificar que la respuesta es correcta
+        // Verificar que la respuesta es 200 y los datos se han actualizado
         $response->assertStatus(200)
                  ->assertJson(['title' => 'Updated Task Title']);
 
-        // Verificar que la tarea se actualizó en la base de datos
+        // Comprobar que los cambios están en la base de datos
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
             'title' => 'Updated Task Title',
@@ -83,22 +95,25 @@ class TaskIntegrationTest extends TestCase
         ]);
     }
 
+    /**
+     * Prueba la eliminación de una tarea mediante la API.
+     */
     public function test_delete_task_via_api()
     {
-        // Autenticar un usuario
+        // Autenticar usuario usando Sanctum
         $user = User::factory()->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user); // Cambiado a Sanctum
 
-        // Crear una tarea asociada al usuario
+        // Crear una tarea de prueba asociada al usuario
         $task = Task::factory()->create(['user_id' => $user->id]);
 
-        // Hacer una solicitud DELETE a la API
+        // Enviar petición DELETE para eliminar la tarea
         $response = $this->deleteJson("/api/tasks/{$task->id}");
 
-        // Verificar que la respuesta es correcta
+        // Verificar que la respuesta es 204 (sin contenido)
         $response->assertStatus(204);
 
-        // Verificar que la tarea ya no existe en la base de datos
+        // Comprobar que la tarea ha sido eliminada de la base de datos
         $this->assertDatabaseMissing('tasks', [
             'id' => $task->id,
         ]);

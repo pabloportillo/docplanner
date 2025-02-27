@@ -9,21 +9,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class TaskFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
+     * Especifica el modelo asociado con la fábrica.
      *
      * @var string
      */
     protected $model = Task::class;
 
     /**
-     * Define the model's default state.
+     * Define los valores por defecto para una tarea.
      *
      * @return array
      */
     public function definition()
     {
         return [
-            'user_id' => User::factory(), // Asocia la tarea con un usuario
+            'user_id' => User::factory(), // Crea y asigna un usuario a la tarea
             'title' => $this->faker->sentence(), // Genera un título aleatorio
             'description' => $this->faker->paragraph(), // Genera una descripción aleatoria
             'status' => $this->faker->randomElement(['pending', 'in_progress', 'completed']), // Estado aleatorio

@@ -7,27 +7,25 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Ejecuta la migración para crear la tabla de tareas.
      */
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); //Clave foranea de usuarios
             $table->string('title');
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->timestamps();
-            // Índice para mejorar búsquedas por estado
-            $table->index('status');
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Revierte la migración, eliminando la tabla de tareas.
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('tasks'); // Elimina la tabla 'tasks' si existe
     }
 };
