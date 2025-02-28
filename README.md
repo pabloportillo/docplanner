@@ -58,3 +58,74 @@ El archivo .env debe contener las siguientes variables:
   DB_USERNAME=root
   DB_PASSWORD=password
 ```
+
+## Referencia de la API
+
+### Autenticación
+
+#### Registrar un nuevo usuario
+```http
+POST /api/auth/register
+```
+_No requiere autenticación._
+
+#### Iniciar sesión
+```http
+POST /api/auth/login
+```
+_No requiere autenticación._
+
+#### Cerrar sesión
+```http
+POST /api/auth/logout
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
+### Usuario
+
+#### Obtener información del usuario
+```http
+GET /api/user
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
+### Tareas
+
+#### Obtener todas las tareas
+```http
+GET /api/tasks
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
+#### Crear una nueva tarea
+```http
+POST /api/tasks
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
+#### Actualizar una tarea
+```http
+PUT /api/tasks/{id}
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `id`       | `string` | **Obligatorio**. ID de la tarea    |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
+#### Eliminar una tarea
+```http
+DELETE /api/tasks/{id}
+```
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------ |
+| `id`       | `string` | **Obligatorio**. ID de la tarea    |
+| `token`    | `string` | **Obligatorio**. Bearer Token     |
+
