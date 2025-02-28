@@ -28,7 +28,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Encripta la contraseña antes de guardarla
+            'password' => bcrypt($request->password),
         ]);
 
         // Genera un token de acceso para el usuario recién registrado

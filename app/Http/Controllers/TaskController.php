@@ -65,22 +65,28 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
-        $task = Task::where('id', $id)
-                   ->where('user_id', Auth::id())
-                   ->firstOrFail();
-
-        // Valida los datos de entrada
-        $request->validate([
-            'title' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'status' => 'sometimes|in:pending,in_progress,completed',
-        ]);
-
-        // Actualiza la tarea
-        $task->update($request->all());
-
-        return response()->json($task, 200);
+        try {
+            // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
+            $task = Task::where('id', $id)
+                       ->where('user_id', Auth::id())
+                       ->firstOrFail();
+    
+            // Valida los datos de entrada
+            $request->validate([
+                'title' => 'sometimes|string|max:255',
+                'description' => 'sometimes|string',
+                'status' => 'sometimes|in:pending,in_progress,completed',
+            ]);
+    
+            // Actualiza la tarea
+            $task->update($request->all());
+    
+            return response()->json($task, 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Tarea no encontrada o no tienes permisos para modificarla.',
+            ], 404);
+        }
     }
 
     /**
@@ -91,14 +97,20 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
-        $task = Task::where('id', $id)
-                   ->where('user_id', Auth::id())
-                   ->firstOrFail();
-
-        // Elimina la tarea
-        $task->delete();
-
-        return response()->json(null, 204);
+        try {
+            // Busca la tarea por ID y verifica que pertenezca al usuario autenticado
+            $task = Task::where('id', $id)
+                       ->where('user_id', Auth::id())
+                       ->firstOrFail();
+    
+            // Elimina la tarea
+            $task->delete();
+    
+            return response()->json(null, 204);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Tarea no encontrada o no tienes permisos para eliminarla.',
+            ], 404);
+        }
     }
 }
