@@ -1,6 +1,6 @@
 # Task Management API
 
-Este proyecto es una API RESTful para la gestión de tareas asociadas a usuarios, desarrollada con Laravel y Docker.
+API RESTful de gestión de tareas, construida con Laravel. Incluye autenticación de usuarios, asignación de tareas, actualizaciones de estado, base de datos MySQL, entorno Dockerizado, pruebas unitarias y un frontend simple en JavaScript/Bootstrap
 
 ## Requisitos previos
 
