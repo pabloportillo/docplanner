@@ -20,21 +20,28 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
    ```bash
    git clone https://github.com/pabloportillo/docplanner.git
    cd docplanner
-2. **Construir y levantar los contenedores:**
+2. **Configuración del archivo .env:**
+   - Copia el archivo .env.example a .env:
+      ```bash
+        cp .env.example .env
+   - Genera la clave de aplicación de Laravel:
+      ```bash
+         docker-compose exec app php artisan key:generate
+3. **Construir y levantar los contenedores:**
    ```bash
    docker-compose up -d --build
-3. **Instalar dependencias de Composer:**
+4. **Instalar dependencias de Composer:**
    ```bash
    docker-compose exec app composer install
-4. **Ejecutar migraciones:**
+5. **Ejecutar migraciones:**
    ```bash
    docker-compose exec app php artisan migrate
-5. **Instalar Laravel Sanctum:** Necesario para la autenticación de usuarios
+6. **Instalar Laravel Sanctum:** Necesario para la autenticación de usuarios
    ```bash
    docker-compose exec app composer require laravel/sanctum
    docker-compose exec app php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
    docker-compose exec app php artisan migrate
-6. **Acceder a la aplicación:**
+7. **Acceder a la aplicación:**
    - La API estará disponible en http://localhost:8000.
    - La base de datos MySQL estará disponible en localhost:3306.
 
