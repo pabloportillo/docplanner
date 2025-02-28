@@ -1,6 +1,6 @@
 # Task Management API
 
-API RESTful de gestión de tareas, construida con Laravel. Incluye autenticación de usuarios, asignación de tareas, actualizaciones de estado, base de datos MySQL, entorno Dockerizado, pruebas unitarias y un frontend simple en JavaScript/Bootstrap
+Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. Incluye autenticación de usuarios, asignación de tareas, actualizaciones de estado, base de datos MySQL, entorno Dockerizado, pruebas unitarias y un frontend simple en JavaScript/Bootstrap.
 
 ## Requisitos previos
 
@@ -10,9 +10,9 @@ API RESTful de gestión de tareas, construida con Laravel. Incluye autenticació
 
 ## Stack
 
-**Cliente:** Javascript
+**Cliente:** Javascript y Bootstrap
 
-**Servidor:** PHP v.8.2 with Laravel v.11
+**Servidor:** PHP 8.2 y Laravel 11
 
 ## Configuración del entorno
 
@@ -62,6 +62,10 @@ El archivo .env debe contener las siguientes variables:
 ## Esquema de la Base de Datos
 
 El esquema de la base de datos se encuentra en la raíz del proyecto en un archivo llamado **database.sql**. Este archivo contiene el script SQL necesario para crear las tablas y relaciones en la base de datos.
+
+## Frontend
+
+El proyecto incluye un frontend simple desarrollado con JavaScript y Bootstrap. Este frontend permite a los usuarios registrarse, iniciar sesión, crear, actualizar y eliminar tareas. Para acceder al frontend, asegúrate de que Docker esté corriendo con los contenedores levantados y luego abre tu navegador y visita http://localhost:8000.
 
 ## Referencia de la API
 
@@ -209,3 +213,5 @@ curl -X DELETE http://localhost:8000/api/tasks/1 \
 -H "Authorization: Bearer <token>"
 ```
 
+---
+Gracias por probar Task Management API! Si tienes alguna pregunta o sugerencia, no dudes en contactar conmigo :smile:
