@@ -38,14 +38,6 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
    - La API estará disponible en http://localhost:8000.
    - La base de datos MySQL estará disponible en localhost:3306.
 
-## Ejecutar Tests
-
-Para ejecutar las pruebas unitarias y de integración.
-
-```bash
-  docker-compose exec app php artisan test
-```
-
 ## Variables de entorno
 
 El archivo .env debe contener las siguientes variables:
@@ -62,6 +54,14 @@ El archivo .env debe contener las siguientes variables:
 ## Esquema de la Base de Datos
 
 El esquema de la base de datos se encuentra en la raíz del proyecto en un archivo llamado **database.sql**. Este archivo contiene el script SQL necesario para crear las tablas y relaciones en la base de datos.
+
+## Ejecutar Tests
+
+Para ejecutar las pruebas unitarias y de integración.
+
+```bash
+  docker-compose exec app php artisan test
+```
 
 ## Frontend
 
