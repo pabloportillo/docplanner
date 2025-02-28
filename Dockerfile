@@ -39,10 +39,6 @@ RUN a2enmod rewrite
 # Copiar el código de la aplicación
 COPY . /var/www/html
 
-# Establecer permisos para directorios de Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
 # Copiar Composer desde el stage anterior
 COPY --from=composer-stage /usr/bin/composer /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
@@ -63,5 +59,5 @@ COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.con
 # Exponer el puerto 80
 EXPOSE 80
 
-# Comando por defecto para iniciar Apache
+# Comando por defecto (puede ser sobrescrito por docker-compose)
 CMD ["apache2-foreground"]
