@@ -1,4 +1,4 @@
-# Task Management API
+# Task Management
 
 Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. Incluye autenticación de usuarios, asignación de tareas, actualizaciones de estado, base de datos MySQL, entorno Dockerizado, pruebas unitarias y un frontend simple en JavaScript/Bootstrap.
 
@@ -18,8 +18,8 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/task-management-api.git
-   cd task-management-api
+   git clone https://github.com/pabloportillo/docplanner.git
+   cd docplanner
 2. **Construir y levantar los contenedores:**
    ```bash
    docker-compose up -d --build
