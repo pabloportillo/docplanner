@@ -214,4 +214,4 @@ curl -X DELETE http://localhost:8000/api/tasks/1 \
 ```
 
 ---
-Gracias por probar Task Management API! Si tienes alguna pregunta o sugerencia, no dudes en contactar conmigo :smile:
+Gracias por probar Task Management! Si tienes alguna pregunta o sugerencia, no dudes en contactar conmigo :smile:
