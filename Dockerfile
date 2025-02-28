@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y \
     libsodium-dev \
     libmagickwand-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) pdo_mysql zip mbstring exif pcntl bcmath gd phar intl opcache
+    && docker-php-ext-install -j$(nproc) pdo_mysql zip mbstring exif pcntl bcmath gd phar intl opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Asegurar que el directorio /tmp tiene permisos adecuados
 RUN chmod 1777 /tmp
@@ -39,7 +40,8 @@ RUN a2enmod rewrite
 COPY . /var/www/html
 
 # Establecer permisos para directorios de Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Copiar Composer desde el stage anterior
 COPY --from=composer-stage /usr/bin/composer /usr/local/bin/composer
@@ -51,13 +53,15 @@ RUN git config --global --add safe.directory /var/www/html
 # Instalar dependencias de Composer
 RUN composer install --optimize-autoloader --no-dev
 
-# Exponer el puerto 80
-EXPOSE 80
-
 # Configurar Apache para Laravel
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-    sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf && \
-    a2enmod rewrite
+    sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 # Copiar configuración de Apache
 COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Comando por defecto para iniciar Apache
+CMD ["apache2-foreground"]

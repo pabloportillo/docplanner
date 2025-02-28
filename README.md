@@ -35,12 +35,7 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
 6. **Ejecutar migraciones:**
    ```bash
    docker-compose exec app php artisan migrate
-7. **Instalar Laravel Sanctum:** Necesario para la autenticación de usuarios
-   ```bash
-   docker-compose exec app composer require laravel/sanctum
-   docker-compose exec app php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-   docker-compose exec app php artisan migrate
-8. **Acceder a la aplicación:**
+7. **Acceder a la aplicación:**
    - La API estará disponible en http://localhost:8000.
    - La base de datos MySQL estará disponible en localhost:3306.
 
