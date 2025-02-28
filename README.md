@@ -1,4 +1,4 @@
-# Task Management
+# Task Manager
 
 Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. Incluye autenticación de usuarios, asignación de tareas, actualizaciones de estado, base de datos MySQL, entorno Dockerizado, pruebas unitarias y un frontend simple en JavaScript/Bootstrap.
 
@@ -214,4 +214,4 @@ curl -X DELETE http://localhost:8000/api/tasks/1 \
 ```
 
 ---
-Gracias por probar Task Management! Si tienes alguna pregunta o sugerencia, no dudes en contactar conmigo :smile:
+Gracias por probar Task Manager! Si tienes alguna pregunta o sugerencia, no dudes en contactar conmigo :smile:
