@@ -1,6 +1,6 @@
 # Task Management API
 
-Este proyecto es una API RESTful para la gestión de tareas, desarrollada con Laravel y Docker.
+Este proyecto es una API RESTful para la gestión de tareas asociadas a usuarios, desarrollada con Laravel y Docker.
 
 ## Requisitos previos
 
@@ -58,6 +58,10 @@ El archivo .env debe contener las siguientes variables:
   DB_USERNAME=root
   DB_PASSWORD=password
 ```
+
+## Esquema de la Base de Datos
+
+El esquema de la base de datos se encuentra en la raíz del proyecto en un archivo llamado **database.sql**. Este archivo contiene el script SQL necesario para crear las tablas y relaciones en la base de datos.
 
 ## Referencia de la API
 
