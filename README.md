@@ -153,9 +153,9 @@ _Requiere autenticación (Bearer Token)_
 curl -X POST http://localhost:8000/api/auth/register \
 -H "Content-Type: application/json" \
 -d '{
-    "name": "Jarry",
-    "email": "jarry@gmail.com",
-    "password": "123456"
+    "name": "Pablo",
+    "email": "pablo@gmail.com",
+    "password": "12345678"
 }'
 ```
 
@@ -164,8 +164,8 @@ curl -X POST http://localhost:8000/api/auth/register \
 curl -X POST http://localhost:8000/api/auth/login \
 -H "Content-Type: application/json" \
 -d '{
-    "email": "jarry@gmail.com",
-    "password": "123456"
+    "email": "pablo@gmail.com",
+    "password": "12345678"
 }'
 ```
 
