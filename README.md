@@ -39,19 +39,6 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
    - La API estará disponible en http://localhost:8000.
    - La base de datos MySQL estará disponible en localhost:3306.
 
-## Variables de entorno
-
-El archivo .env debe contener las siguientes variables:
-
-```bash
-  DB_CONNECTION=mysql
-  DB_HOST=db
-  DB_PORT=3306
-  DB_DATABASE=task_management
-  DB_USERNAME=root
-  DB_PASSWORD=password
-```
-
 ## Esquema de la Base de Datos
 
 El esquema de la base de datos se encuentra en la raíz del proyecto en un archivo llamado **database.sql**. Este archivo contiene el script SQL necesario para crear las tablas y relaciones en la base de datos.
