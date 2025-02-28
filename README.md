@@ -61,71 +61,147 @@ El archivo .env debe contener las siguientes variables:
 
 ## Referencia de la API
 
-### Autenticación
+### Endpoints de la API
 
-#### Registrar un nuevo usuario
+#### Autenticación
+
+##### Registrar un nuevo usuario
 ```http
 POST /api/auth/register
 ```
 _No requiere autenticación._
 
-#### Iniciar sesión
+##### Iniciar sesión
 ```http
 POST /api/auth/login
 ```
 _No requiere autenticación._
 
-#### Cerrar sesión
+##### Cerrar sesión
 ```http
 POST /api/auth/logout
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
 
 ### Usuario
 
-#### Obtener información del usuario
+##### Obtener información del usuario
 ```http
 GET /api/user
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
 
 ### Tareas
 
-#### Obtener todas las tareas
+##### Obtener todas las tareas
 ```http
 GET /api/tasks
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
 
-#### Crear una nueva tarea
+##### Crear una nueva tarea
 ```http
 POST /api/tasks
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
 
-#### Actualizar una tarea
+##### Actualizar una tarea
 ```http
 PUT /api/tasks/{id}
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `id`       | `string` | **Obligatorio**. ID de la tarea    |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
 
-#### Eliminar una tarea
+##### Eliminar una tarea
 ```http
 DELETE /api/tasks/{id}
 ```
-| Parámetro  | Tipo     | Descripción                      |
-| :--------- | :------- | :------------------------------ |
-| `id`       | `string` | **Obligatorio**. ID de la tarea    |
-| `token`    | `string` | **Obligatorio**. Bearer Token     |
+_Requiere autenticación (Bearer Token)_
+
+## Ejemplo de Respuestas
+
+##### Registro de Usuario (POST /api/auth/register)
+```json
+{
+    "message": "Usuario registrado correctamente"
+}
+```
+
+##### Login de Usuario (POST /api/auth/login)
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+##### Obtener Tareas (GET /api/tasks)
+```json
+[
+    {
+        "id": 1,
+        "title": "Tarea 1",
+        "description": "Descripción de la tarea 1",
+        "status": "pending",
+        "user_id": 1
+    }
+]
+```
+
+## Ejemplos de Llamadas API
+
+##### Registro de Usuario
+```bash
+curl -X POST http://localhost:8000/api/auth/register \
+-H "Content-Type: application/json" \
+-d '{
+    "name": "Jarry",
+    "email": "jarry@gmail.com",
+    "password": "123456"
+}'
+```
+
+##### Login de Usuario
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{
+    "email": "jarry@gmail.com",
+    "password": "123456"
+}'
+```
+
+##### Obtener Tareas
+```bash
+curl -X GET http://localhost:8000/api/tasks \
+-H "Authorization: Bearer <token>"
+```
+
+##### Crear Tarea
+```bash
+curl -X POST http://localhost:8000/api/tasks \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <token>" \
+-d '{
+    "title": "Nueva Tarea",
+    "description": "Descripción de la nueva tarea",
+    "status": "pending"
+}'
+```
+
+##### Actualizar Tarea
+```bash
+curl -X PUT http://localhost:8000/api/tasks/1 \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <token>" \
+-d '{
+    "title": "Tarea Actualizada",
+    "description": "Descripción actualizada",
+    "status": "in_progress"
+}'
+```
+
+##### Eliminar Tarea
+```bash
+curl -X DELETE http://localhost:8000/api/tasks/1 \
+-H "Authorization: Bearer <token>"
+```
 
