@@ -42,6 +42,7 @@ Este proyecto es una API RESTful de gestión de tareas, construida con Laravel. 
 ## Esquema de la Base de Datos
 
 El esquema de la base de datos se encuentra en la raíz del proyecto en un archivo llamado **database.sql**. Este archivo contiene el script SQL necesario para crear las tablas y relaciones en la base de datos.
+. ***Anotación***: **No es necesario cargar el script si previamente se han lanzado las migraciones con docker-compose exec app php artisan migrate.**
 
 ## Ejecutar Tests
 
